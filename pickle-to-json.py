@@ -1,3 +1,4 @@
+import json
 import pickle
 import pandas as pd
 from sys import argv
@@ -9,7 +10,7 @@ input_file = open(filename, 'rb')
 new_dict = pickle.load(input_file)
 
 # Create a Pandas DataFrame
-df = pd.DataFrame.from_dict(new_dict, orient='index')
+df = pd.DataFrame(new_dict)
 
 # Copy DataFrame index as a column
 df['index1'] = df.index
@@ -23,5 +24,5 @@ df.insert(0, 'index1', index1)
 json_df = df.to_json(orient='values', date_format='iso', date_unit='s')
 
 # Create and record the JSON data in a new .JSON file
-with open('data.json', 'w') as js_file:
+with open(f'{filename}.json', 'w') as js_file:
     js_file.write(json_df)
